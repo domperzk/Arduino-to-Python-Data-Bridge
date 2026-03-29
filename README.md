@@ -1,25 +1,26 @@
 # Arduino to Python Data Bridge
 
-## 💡 What is this?
-This is a "Hello World" style project for the world of Hardware + Software. I wanted to see if I could make an LED react to light in the real world and then send that data to my Mac to be graphed live.
+## Project Overview
+This project serves as a foundational study in hardware-to-software data pipelines. It establishes a real-time, unidirectional serial bridge between an embedded microcontroller (Arduino UNO) and a host machine (macOS) to visualise physical sensor data dynamically.
 
-## 🛠️ How it works
-1. **The Hardware:** An Arduino reads a photoresistor. If it gets dark, the Arduino automatically dims or brightens an LED using PWM.
-2. **The Bridge:** The Arduino sends the light level numbers over the USB cable (Serial).
-3. **The Visuals:** A Python script picks up those numbers and uses `Matplotlib` to draw a live moving graph of the light levels.
+## System Pipeline
+1.  **Data Acquisition:** The Arduino continuously polls an analogue photoresistor (LDR) to measure ambient light intensity.
+2.  **Hardware Feedback Loop:** A simple proportional control logic running on the microcontroller automatically adjusts the PWM duty cycle of an LED to inversely match the ambient light.
+3.  **Serial Transmission:** The raw 10-bit ADC values are transmitted over UART to the host computer.
+4.  **Data Visualisation:** A Python script operating within a virtual environment intercepts the serial stream and utilises `matplotlib` to render a live, moving time-series graph of the environmental data.
 
-## 🧱 Parts List
-- Arduino Uno
-- LED & Photoresistor
-- Resistors (220Ω and 10kΩ)
-- Breadboard & Wires
+## Hardware Components
+* Arduino UNO R3
+* Photoresistor (LDR)
+* Standard 5mm LED
+* Resistors (220Ω for LED current limiting, 10kΩ for LDR voltage divider)
 
-## 💻 Tech Stack
-- **C++ / Arduino:** For the sensor logic and LED control.
-- **Python:** For the data processing.
-- **Libraries:** `pyserial` (to talk to the Arduino), `matplotlib` (for the graph), and `numpy` (to handle the data).
+## Technologies Used
+* **C++ / Arduino:** Embedded sensor polling, PWM actuation, and UART transmission.
+* **Python:** Serial port interfacing and data handling (`pyserial`, `numpy`).
+* **Matplotlib:** Real-time data rendering and UI updates.
 
-## 📝 What I Learned
-- How to debug a hardware circuit (and that LEDs only work in one direction!).
-- How to set up a Python Virtual Environment (`venv`) on a Mac.
-- How to map different scales of numbers (0-1023 sensor values to 0-255 LED values).
+## Technical Takeaways
+* Implementing hardware-in-the-loop debugging and understanding diode polarity.
+* Managing Python virtual environments (`venv`) for isolated dependency management on macOS.
+* Applying linear mapping to scale 10-bit ADC resolution (0-1023) to 8-bit PWM resolution (0-255).
